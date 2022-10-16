@@ -3,6 +3,8 @@ import streamlit_authenticator as stauth
 import ui.loadData as ld
 import yaml
 from auth import register
+from connection.ConnectWithMongo import Connection
+from models.userAuth import userAuth
 
 from ui import MultiApp
 
@@ -13,7 +15,7 @@ def app():
     # with open('./config.yml') as file:
     #     config = yaml.load(file, Loader=yaml.SafeLoader)
 
-    hashed_passwords = stauth.Hasher(['123']).generate()
+    #hashed_passwords = stauth.Hasher(['123']).generate()
     # print(hashed_passwords)
     #
     # {
@@ -25,43 +27,30 @@ def app():
     #     }
     #   }
     # }
+    connection = Connection(dbName='pipeline-gui')
+    userAuthObj  = userAuth.getUserObjByUserName('admin')
+    password = ''
+    for obj in userAuthObj:
+        if obj.password:
+            password = obj.password
 
     credentials =  {
       "usernames": {
-        "mohit": {
+        "admin": {
           "email": "mohitmanglani2906@gmail.com",
           "name": "Mohit Manglani",
-          "password": hashed_passwords[0]
+          "password": password
         }
       }
     }
 
     authenticator = stauth.Authenticate(
         credentials,
-        "some_cookie_name",
-        "some_signature_key",
+        "pipeline_gui",
+        "",
         30,
         ["mohitmanglani2906@gmail.com"]
     )
 
-    name, authentication_status, username = authenticator.login('Login', 'main')
-    #authenticator.register_user('Register User', preauthorization=False)
-    # print("Here\n", st.session_state)
-
-    #
-    if authentication_status:
-       # del st.sidebar.radio
-        authenticator.logout('Logout', 'sidebar')
-        st.write('Welcome *%s*' % (name))
-        ld.app()
-        # app = MultiApp()
-        # app.add_app("Another App", register.app)
-        # app.run("Duplicate App")
-        #print("sesstion ", st.session_state)
-        #st.sidebar.title('Navigation 2')
-        #del st.sidebar
-
-    elif authentication_status == False:
-        st.error('Username/password is incorrect')
-    elif authentication_status == None:
-        st.warning('Please enter your username and password again')
+    name, authentication_status, username =  authenticator.login('Login', 'main')
+    return name, authentication_status, username, authenticator
