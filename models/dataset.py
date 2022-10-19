@@ -1,8 +1,9 @@
 from mongoengine import Document, StringField, DictField, DateTimeField
 import datetime
 
-
 class KaggleDataSet(Document):
+    #Document represents this is a collection/table name in mongodb
+    #these fields represents column names in kaggle_data_set collection/table
     dataset_name = StringField(required=True)
     dataset_json = DictField(required=True)
     createdAt = DateTimeField(default=datetime.datetime.now())

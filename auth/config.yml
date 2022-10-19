@@ -1,8 +1,8 @@
 credentials:
   usernames:
     mohit:
-      email: mohitmanglani2906@gmail.com
-      name: Mohit Manglani
+      email: <Your email id>
+      name: <Your Name>
       password: '123' # To be replaced with hashed password
 cookie:
   expiry_days: 30
@@ -10,4 +10,4 @@ cookie:
   name: "some_cookie_name"
 preauthorized:
   emails:
-  - mohitmanglani2906@gmail.com
+  - <Your email id>

@@ -11,7 +11,7 @@ from ui import MultiApp
 
 def app():
 
-
+    #using config.yml we can authenticate use. but as of now we are not using this.
     # with open('./config.yml') as file:
     #     config = yaml.load(file, Loader=yaml.SafeLoader)
 
@@ -27,7 +27,11 @@ def app():
     #     }
     #   }
     # }
+
+    #creating connection object to connect our app with mongo db
     connection = Connection(dbName='pipeline-gui')
+
+    #here we are using admin username that we have statically stored in mong
     userAuthObj  = userAuth.getUserObjByUserName('admin')
     password = ''
     for obj in userAuthObj:
@@ -44,6 +48,7 @@ def app():
       }
     }
 
+    #using streamlt_authenticator we are doing authentication of admin user.
     authenticator = stauth.Authenticate(
         credentials,
         "pipeline_gui",
