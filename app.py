@@ -3,6 +3,20 @@ from ui import MultiApp
 from auth import login
 import ui.loadData as ld
 import ui.fetchData as fd
+from connection.ConnectWithMongo import Connection
+from models.userAuth import userAuth
+import streamlit_authenticator as stauth
+#
+# connection = Connection(dbName='pipeline-gui')
+# print(userAuth.getUserObjByUserName('Annabel'))
+
+# def addUserInDB():
+#     connection = Connection(dbName='pipeline-gui')
+#     password = stauth.Hasher(['']).generate() #creating hashed password as per requirenment
+#     userAuthObj = userAuth(userName='', userEmail='', fullName='', password=password[0])
+#     userAuthObj.save()
+#
+# addUserInDB()
 
 name, authentication_status, username, authenticator = login.app()
 

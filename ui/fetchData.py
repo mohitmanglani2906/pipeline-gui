@@ -1,12 +1,10 @@
 import streamlit as st
 from models.dataset import KaggleDataSet
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
 from utils.buildModel import buildModels
 from utils.modelEvaluation import evaluationModel
 from utils.visualizeData import visualizeDiscreteAndContinuousData, visualizeModelEvaluation
+from utils.trainTestData import trainTestData
 
 def app():
     st.header("Choose Dataset To Create A Model")
@@ -18,19 +16,7 @@ def app():
             if datasetJson and datasetJson != dict():
                 df = pd.DataFrame.from_dict(datasetJson, orient='index')
 
-                #feature selection
-                y = df['DEATH_EVENT'] #dependent variable
-                x = df.drop("DEATH_EVENT", axis=1)  #independent variables
-
-                #splliting training and testing data
-                x_train, x_test, y_train, y_test = train_test_split(x,y,
-                                                                    test_size=0.2,
-                                                                    shuffle=True,
-                                                                    random_state=4)
-                scaler = StandardScaler() #to equally contribution of data we do standrization
-                scaler.fit(x_train)
-                x_train = scaler.transform(x_train)
-                x_test = scaler.transform(x_test)
+                x_train, x_test, y_train, y_test = trainTestData(df) #this function involves feature selection, training and testing of data, etc.
 
                 vis_data_bt, model_evaluate_bt, build_model_bt  = st.columns(3)
 

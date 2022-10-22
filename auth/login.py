@@ -1,12 +1,8 @@
-import streamlit as st
 import streamlit_authenticator as stauth
-import ui.loadData as ld
-import yaml
-from auth import register
 from connection.ConnectWithMongo import Connection
 from models.userAuth import userAuth
 
-from ui import MultiApp
+# from ui import MultiApp
 
 
 def app():
@@ -41,8 +37,8 @@ def app():
     credentials =  {
       "usernames": {
         "admin": {
-          "email": "mohitmanglani2906@gmail.com",
-          "name": "Mohit Manglani",
+          "email": "<your email id>",
+          "name": "<Your Name>",
           "password": password
         }
       }
@@ -54,7 +50,7 @@ def app():
         "pipeline_gui",
         "",
         30,
-        ["mohitmanglani2906@gmail.com"]
+        ["<your email id>"]
     )
 
     name, authentication_status, username =  authenticator.login('Login', 'main')
